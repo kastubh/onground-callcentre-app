@@ -1,0 +1,13 @@
+import { useEffect, useState } from 'react';
+import { CheckCircle2, Mic, MicOff, PhoneOff, Phone } from 'lucide-react';
+import Modal from './Modal';
+import { Badge } from './ui';
+import { useLocalState } from '../hooks/useLocalState';
+import { currentTime } from '../lib/format';
+interface SavedOutcome { id: string; name: string; duration: number; outcome: string; time: string; }
+export default function CallModal({ name, onClose }: { name: string; onClose: () => void }) {
+ const [seconds, setSeconds] = useState(0); const [muted, setMuted] = useState(false); const [ended, setEnded] = useState(false); const [outcome, setOutcome] = useState('Follow-up scheduled'); const [saved, setSaved] = useState(false); const [, setOutcomes] = useLocalState<SavedOutcome[]>('onground:outcomes', []);
+ useEffect(() => { if (ended) return; const timer = window.setInterval(() => setSeconds(value => value + 1), 1000); return () => window.clearInterval(timer); }, [ended]);
+ function save() { setOutcomes(previous => [...previous, { id: crypto.randomUUID(), name, duration: seconds, outcome, time: currentTime() }]); setSaved(true); }
+ return <Modal title={saved ? 'Outcome saved' : ended ? 'Wrap up your call' : 'Call in progress'} onClose={onClose}><div className="call-modal-content"><Badge tone="neutral">Local demo · no real call</Badge><span className={`call-avatar ${!ended ? 'ringing' : ''}`}>{saved ? <CheckCircle2 size={34} /> : <Phone size={32} />}</span><h2>{name}</h2><div className="call-timer">{String(Math.floor(seconds / 60)).padStart(2, '0')}:{String(seconds % 60).padStart(2, '0')}</div>{!ended ? <><p className="muted">{muted ? 'Microphone muted' : 'Simulated call connected'}</p><div className="call-controls"><button className={`button outline ${muted ? 'muted-control' : ''}`} onClick={() => setMuted(!muted)} aria-pressed={muted}>{muted ? <MicOff size={17} /> : <Mic size={17} />}{muted ? 'Unmute' : 'Mute'}</button><button className="button danger" onClick={() => setEnded(true)}><PhoneOff size={17} />End call</button></div></> : saved ? <><p>Your outcome “{outcome}” is saved in this browser.</p><button className="button primary" onClick={onClose}>Done</button></> : <><p className="muted">Close the loop with a clear next step.</p><label className="outcome-label">Call outcome<select value={outcome} onChange={event => setOutcome(event.target.value)}>{['Follow-up scheduled', 'Converted', 'Quotation sent', 'Not interested', 'No answer'].map(item => <option key={item}>{item}</option>)}</select></label><button className="button primary" onClick={save}>Save outcome <CheckCircle2 size={15} /></button></>}</div></Modal>;
+}
