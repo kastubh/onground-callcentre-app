@@ -1736,6 +1736,9 @@ a svg {
   border-radius: 6px;
 }
 .modal {
+  margin: auto;
+  inset: 0;
+  height: fit-content;
   border: 1px solid #e5e6e9;
   border-radius: 13px;
   padding: 0;
@@ -1748,6 +1751,23 @@ a svg {
 }
 .modal.wide {
   width: min(600px, calc(100vw - 32px));
+}
+.lead-dots {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin: -7px 0 14px;
+}
+.lead-dots button {
+  width: 7px;
+  height: 7px;
+  border: 0;
+  border-radius: 50%;
+  background: #dedee5;
+  padding: 0;
+}
+.lead-dots button.active {
+  background: #59846a;
 }
 .modal::backdrop {
   background: #122a2766;

@@ -14,6 +14,17 @@ export default function LeadsModal({ onClose }: { onClose: () => void }) {
       onClose={onClose}
     >
       <Pagination page={page} total={5} onChange={setPage} />
+      <div className="lead-dots" aria-label="Lead pages">
+        {leads.slice(0, 5).map((item, index) => (
+          <button
+            key={item.id}
+            aria-label={`View lead ${index + 1}: ${item.name}`}
+            aria-current={page === index ? 'true' : undefined}
+            className={page === index ? 'active' : ''}
+            onClick={() => setPage(index)}
+          />
+        ))}
+      </div>
       <div className="lead-profile">
         <span className="avatar large pastel">{lead.initials}</span>
         <div>

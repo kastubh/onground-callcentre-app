@@ -11,6 +11,9 @@ test('dashboard and accessible lead review', async ({ page }) => {
   await page.screenshot({ path: 'docs/screenshots/dashboard.png', fullPage: true });
   await page.getByRole('button', { name: /2 callbacks/ }).click();
   await expect(page.getByRole('dialog')).toBeVisible();
+  const dialogBox = await page.getByRole('dialog').boundingBox();
+  expect(dialogBox).not.toBeNull();
+  expect(Math.abs(dialogBox!.x + dialogBox!.width / 2 - 720)).toBeLessThan(2);
   await expect(page.getByRole('heading', { name: 'Mukunda', exact: true })).toBeVisible();
   await page.screenshot({ path: 'docs/screenshots/leads.png' });
   await page.getByRole('button', { name: 'Next page', exact: true }).click();
