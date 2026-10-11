@@ -1,6 +1,71 @@
 import type { ReactNode } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-export function Card({ children, className = '' }: { children: ReactNode; className?: string }) { return <section className={`card ${className}`}>{children}</section>; }
-export function Badge({ children, tone = 'green' }: { children: ReactNode; tone?: 'green' | 'red' | 'amber' | 'purple' | 'neutral' }) { return <span className={`badge ${tone}`}>{children}</span>; }
-export function Pagination({ page, total, onChange }: { page: number; total: number; onChange: (page: number) => void }) { return <div className="pagination"><span>Page {page + 1} of {total}</span><div><button className="icon-button" disabled={page === 0} onClick={() => onChange(page - 1)} aria-label="Previous page"><ChevronLeft size={16} /></button><button className="icon-button" disabled={page >= total - 1} onClick={() => onChange(page + 1)} aria-label="Next page"><ChevronRight size={16} /></button></div></div>; }
-export function PageTitle({ eyebrow, title, subtitle, action }: { eyebrow?: string; title: string; subtitle?: string; action?: ReactNode }) { return <div className="page-title"><div>{eyebrow && <div className="eyebrow">{eyebrow}</div>}<h1>{title}</h1>{subtitle && <p>{subtitle}</p>}</div>{action}</div>; }
+export function Card({ children, className = '' }: { children: ReactNode; className?: string }) {
+  return <section className={`card ${className}`}>{children}</section>;
+}
+export function Badge({
+  children,
+  tone = 'green',
+}: {
+  children: ReactNode;
+  tone?: 'green' | 'red' | 'amber' | 'purple' | 'neutral';
+}) {
+  return <span className={`badge ${tone}`}>{children}</span>;
+}
+export function Pagination({
+  page,
+  total,
+  onChange,
+}: {
+  page: number;
+  total: number;
+  onChange: (page: number) => void;
+}) {
+  return (
+    <div className="pagination">
+      <span>
+        Page {page + 1} of {total}
+      </span>
+      <div>
+        <button
+          className="icon-button"
+          disabled={page === 0}
+          onClick={() => onChange(page - 1)}
+          aria-label="Previous page"
+        >
+          <ChevronLeft size={16} />
+        </button>
+        <button
+          className="icon-button"
+          disabled={page >= total - 1}
+          onClick={() => onChange(page + 1)}
+          aria-label="Next page"
+        >
+          <ChevronRight size={16} />
+        </button>
+      </div>
+    </div>
+  );
+}
+export function PageTitle({
+  eyebrow,
+  title,
+  subtitle,
+  action,
+}: {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  action?: ReactNode;
+}) {
+  return (
+    <div className="page-title">
+      <div>
+        {eyebrow && <div className="eyebrow">{eyebrow}</div>}
+        <h1>{title}</h1>
+        {subtitle && <p>{subtitle}</p>}
+      </div>
+      {action}
+    </div>
+  );
+}
