@@ -2,6 +2,10 @@
 
 A compact, responsive agent workspace for **Arvind Rajan at The Sleep Company**. It brings the calling plan, performance, lead context, calendar, and team conversations into one place. All business data is mocked locally; there is no backend and no real call is placed.
 
+**Source:** [github.com/kastubh/onground-callcentre-app](https://github.com/kastubh/onground-callcentre-app)
+
+**Private live preview:** [On-Ground.ai agent workspace](https://onground-callcentre.validbowl256.chatgpt.site) · requires the owning ChatGPT account.
+
 ## Preview
 
 ![Agent dashboard](docs/screenshots/dashboard.png)
@@ -87,13 +91,15 @@ Reusable native `<dialog>` modals provide focus trapping, Escape dismissal, and 
 
 ## Verification
 
+Production build, ESLint, Prettier checks, and all **5 Chrome end-to-end tests** pass. `npm audit` reports **0 vulnerabilities** at verification time.
+
 The Chrome suite covers dashboard rendering and chart presence; lead paging, Escape and focus restoration; calling-plan search and pagination; callback mute, timer and outcome saving; recent-call review; month navigation and real-date highlighting; Pulse search and persistent messages; callback confirmation; and horizontal overflow checks across all eight routes at 390px width.
 
 ## Deployment
 
 The project includes `vercel.json` and `netlify.toml` so direct links such as `/pulse/callcentre-team` fall back to `index.html`. Import the GitHub repository into Vercel or Netlify, use `npm run build`, and publish `dist`. No secrets or runtime environment variables are required.
 
-A private Sites deployment is also prepared through `.openai/hosting.json`. Its verified live URL will be added after publication. Vercel/Netlify account connection is required to deploy there.
+The live preview uses private Sites hosting configured through `.openai/hosting.json`. Vercel/Netlify deployment was not performed because those accounts are not connected; their deployment configurations are ready in the repository.
 
 ## AI disclosure
 
